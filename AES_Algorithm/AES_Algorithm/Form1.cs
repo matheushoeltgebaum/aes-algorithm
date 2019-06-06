@@ -112,18 +112,46 @@ namespace AES_Algorithm
 
         private void GenerateRoundKeys()
         {
+            //Adiciona a chave em si
             RoundKeys.Add(Key);
 
             for (var i = 1; i < 11; i++)
             {
-                var lastWord = RoundKeys[i - 1].GetColumn(3);
-                var firstWord = GenerateFirstWord(lastWord);
+                var previousLastWord = RoundKeys[i - 1].GetColumn(3);
+                var firstWord = GenerateFirstWord(previousLastWord);
             }
         }
 
         private byte[] GenerateFirstWord(byte[] lastWord)
         {
-            return new byte[10];
+            //RotWord
+            var firstWord = lastWord.LeftShiftArray(1);
+
+            //SubWord
+            firstWord = CalculateSBox(firstWord);
+
+            //RoundConstant
+
+            //XOR
+
+            //XOR
+
+            return firstWord;
+        }
+
+        private byte[] CalculateSBox(byte[] word)
+        {
+            foreach (var b in word)
+            {
+                var hexString = b.ToString("X2");
+
+                var firstPartHex = hexString[0];
+                var secondPartHex = hexString[1];
+
+                hexString = SBox.GetNewHexString(firstPartHex, secondPartHex);
+            }
+
+            return new byte[4];
         }
     }
 }
