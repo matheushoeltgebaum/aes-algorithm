@@ -19,16 +19,13 @@ namespace AES_Algorithm
                 .ToArray();
         }
 
-        public static T[] LeftShiftArray<T>(this T[] array, int shift)
+        public static string GetHexString(this byte[] value)
         {
-            var newArray = array;
-            shift = shift % array.Length;
-            T[] buffer = new T[shift];
-            Array.Copy(newArray, buffer, shift);
-            Array.Copy(newArray, shift, newArray, 0, newArray.Length - shift);
-            Array.Copy(buffer, 0, newArray, newArray.Length - shift, shift);
+            string result = "";
+            for (var i = 0; i < value.Length; i++)
+                result += value[i].ToString("X2");
 
-            return newArray;
+            return result;
         }
     }
 }
